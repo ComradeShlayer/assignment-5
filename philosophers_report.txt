@@ -1,0 +1,36 @@
+% Enter the names of your group members below.
+% If you only have 2 group members, leave the last space blank
+%
+%%%%%
+%%%%% NAME: 
+%%%%% NAME:
+%%%%% NAME:
+%
+% Add your report below
+% 
+%%%%% SUMMARY
+%%%%% In 1-2 paragraphs, describe what part of the assignment you completed and discuss your overall findings.
+%%%%% Be sure to describe the computer you ran your tests on
+
+
+
+
+%%%%% EXTRA GOALS FOR PART B
+%%%%% Include the extra goals you used for Part B here
+%%%%% Include a brief English description of each
+
+
+
+%%%%% INTERACTION IN REGULAR MODE
+%%%%% Include your interaction below when testing the planner in regular mode (ie. without declarative heuristics)
+
+
+
+
+
+%%%%% INTERACTION IN HEURISTIC MODE
+%%%%% Include your interaction below when testing the planner in heuristic mode (ie. when using declarative heuristics for pruning)
+
+
+
+
