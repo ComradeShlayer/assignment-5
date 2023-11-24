@@ -75,15 +75,15 @@ container(dresser).
 
 % Put the rest of your precondition axioms below
 poss(fetch(O, C), S) :- not (holding(_, S)).
-poss(putAway(O, C), S) :- holding(O, S).
-poss(addSoap(P, W), S) :- holding(P, S), not hasSoap(W, S).
-poss(addSoftener(T, W), S) :- holding(T, S), not hasSoftener(W, S).
-poss(removeLint(D), S) :- not (holding(_, S)), hasLint(D, S).
-poss(washClothes(C, W), S) :- in(C, W, S), not clean(C, S), hasSoap(W, S), hasSoftener(W, S).
-poss(dryClothes(C, D), S) :- in(C, D, S), wet(C, S), not hasLint(D, S).
-poss(fold(C), S) :- clean(C, S), not (folded(C, S), holding(_, S), wet(C, S)). 
-poss(wear(C), S) :- folded(C, S).
-poss(move(C, F, T), S) :- container(T), container(F), in(C, F, S), not (holding(_, S), in(_, T, S)). 
+poss(putAway(O, C), S) :- container(C), holding(O, S).
+poss(addSoap(P, W), S) :- washer(W), soap(P), holding(P, S), not hasSoap(W, S).
+poss(addSoftener(T, W), S) :- washer(W), softener(T), holding(T, S), not hasSoftener(W, S).
+poss(removeLint(D), S) :- dryer(D), not (holding(_, S)), hasLint(D, S).
+poss(washClothes(C, W), S) :- washer(W), in(C, W, S), not clean(C, S), hasSoap(W, S), hasSoftener(W, S).
+poss(dryClothes(C, D), S) :- dryer(D), clothes(C), in(C, D, S), wet(C, S), not hasLint(D, S).
+poss(fold(C), S) :- clothes(C), clean(C, S), not (folded(C, S), holding(_, S), wet(C, S)). 
+poss(wear(C), S) :- clothes(C), folded(C, S).
+poss(move(C, F, T), S) :- clothes(C), container(T), container(F), in(C, F, S), not (holding(_, S), in(_, T, S)). 
 
 %%%%% SECTION: successor_state_axioms_laundry 
 %%%%% Write successor-state axioms that characterize how the truth value of all 
