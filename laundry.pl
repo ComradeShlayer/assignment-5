@@ -110,20 +110,17 @@ holding(O, [fetch(O, _)|S]).
 holding(O, [A|S]) :- not A = putAway(O, _), holding(O, S).
 holding(O, [A|S]) :- soap(O), not A = addSoap(O, _), holding(O, S).
 holding(O, [A|S]) :- softener(O), not A = addSoftener(O, _), holding(O, S).
-%these next three are classic cases, there is one action that causes them to be true and one action causes them to be false 
+%these next six are classic cases, there is one action that causes them to be true and one action causes them to be false 
 hasSoap(W, [addSoap(P, W)|S]).
 hasSoap(W, [A|S]) :- not A = washClothes(_, W), hasSoap(W, S).
 hasSoftener(W, [addSoftener(P, W)|S]).
 hasSoftener(W, [A|S]) :- not A = washClothes(_, W), hasSoftener(W, S).
 hasLint(D, [dryClothes(_, D)|S]).
 hasLint(D, [A|S]) :- not A = removeLint(D), hasLint(D, S).
-%
 clean(C, [washClothes(C, _)|S]).
 clean(C, [A|S]) :- not A = wear(C), clean(C, S). 
-%
 wet(C, [washClothes(C, _)|S]).
 wet(C, [A|S]) :- not A = dryClothes(C, _), wet(C, S).
-%
 folded(C, [fold(C)|S]).
 folded(C, [A|S]) :- not A = wear(C), folded(C, S).
 
