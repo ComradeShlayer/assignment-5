@@ -83,7 +83,7 @@ poss(washClothes(C, W), S) :- washer(W), in(C, W, S), not clean(C, S), hasSoap(W
 poss(dryClothes(C, D), S) :- dryer(D), clothes(C), in(C, D, S), wet(C, S), not hasLint(D, S).
 poss(fold(C), S) :- clothes(C), clean(C, S), not (folded(C, S), holding(_, S), wet(C, S)). 
 poss(wear(C), S) :- clothes(C), folded(C, S).
-poss(move(C, F, T), S) :- clothes(C), container(T), container(F), in(C, F, S), not (holding(_, S), in(_, T, S)). 
+poss(move(C, F, T), S) :- clothes(C), container(T), container(F), in(C, F, S), not (T = F, holding(_, S), in(_, T, S)). 
 
 %%%%% SECTION: successor_state_axioms_laundry 
 %%%%% Write successor-state axioms that characterize how the truth value of all 
@@ -99,7 +99,33 @@ poss(move(C, F, T), S) :- clothes(C), container(T), container(F), in(C, F, S), n
 %%%%%
 %%%%% Write your successor state rules here: you have to write brief comments %
 
-
+%in requires two of (a) and (b) since there are two actions that can move an object into a container
+%for move action, we only need to check one of the locations each time since we either care where it was or where it went 
+in(O, C, [move(O, _, C)|S]).
+in(O, C, [putAway(O, C)|S]).
+in(O, C, [A|S]) :- not A = move(O, C, _), in(O, C, S).
+in(O, C, [A|S]) :- not A = fetch(O, C), in(O, C, S).
+%three cases to no longer be holding, depends on what you are holding, since certain things can be added to washers and certain things cannot
+holding(O, [fetch(O, _)|S]).
+holding(O, [A|S]) :- not A = putAway(O, _), holding(O, S).
+holding(O, [A|S]) :- soap(O), not A = addSoap(O, _), holding(O, S).
+holding(O, [A|S]) :- softener(O), not A = addSoftener(O, _), holding(O, S).
+%these next three are classic cases, there is one action that causes them to be true and one action causes them to be false 
+hasSoap(W, [addSoap(P, W)|S]).
+hasSoap(W, [A|S]) :- not A = washClothes(_, W), hasSoap(W, S).
+hasSoftener(W, [addSoftener(P, W)|S]).
+hasSoftener(W, [A|S]) :- not A = washClothes(_, W), hasSoftener(W, S).
+hasLint(D, [dryClothes(_, D)|S]).
+hasLint(D, [A|S]) :- not A = removeLint(D), hasLint(D, S).
+%
+clean(C, [washClothes(C, _)|S]).
+clean(C, [A|S]) :- not A = wear(C), clean(C, S). 
+%
+wet(C, [washClothes(C, _)|S]).
+wet(C, [A|S]) :- not A = dryClothes(C, _), wet(C, S).
+%
+folded(C, [fold(C)|S]).
+folded(C, [A|S]) :- not A = wear(C), folded(C, S).
 
 %%%%% SECTION: declarative_heuristics_laundry
 %%%%% The predicate useless(A,ListOfPastActions) is true if an action A is useless
