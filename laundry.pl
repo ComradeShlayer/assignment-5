@@ -48,7 +48,8 @@
 goal_state(1, S) :- clean(cl1,S).
 goal_state(2, S) :- clean(cl1,S), not wet(cl1,S).
 goal_state(3, S) :- clean(cl1,S), not wet(cl1,S), folded(cl1,S), in(cl1,dresser,S).
-
+goal_state(4, S) :- wet(cl1,S).
+goal_state(5, S) :- in(cl1,washer,S).
 
 %%%%% Your program is not required to produce plans for the following long
 %%%%% goal state that is optional. But if you want to try it, then
@@ -74,16 +75,16 @@ container(X) :- hamper(X).
 container(dresser).
 
 % Put the rest of your precondition axioms below
-poss(fetch(O, C), S) :- not (holding(_, S)).
+poss(fetch(O, C), S) :- not (holding(_, S)), container(C), in(O, C, S).
 poss(putAway(O, C), S) :- container(C), holding(O, S).
-poss(addSoap(P, W), S) :- washer(W), soap(P), holding(P, S), not hasSoap(W, S).
+poss(addSoap(P, W), S) :- washer(W), not hasSoap(W, S), soap(P), holding(P, S).
 poss(addSoftener(T, W), S) :- washer(W), softener(T), holding(T, S), not hasSoftener(W, S).
-poss(removeLint(D), S) :- dryer(D), not (holding(_, S)), hasLint(D, S).
-poss(washClothes(C, W), S) :- washer(W), in(C, W, S), not clean(C, S), hasSoap(W, S), hasSoftener(W, S).
+poss(removeLint(D), S) :- not (holding(_, S)), dryer(D), hasLint(D, S).
+poss(washClothes(C, W), S) :- clothes(C), washer(W), in(C, W, S), not clean(C, S), hasSoap(W, S), hasSoftener(W, S).
 poss(dryClothes(C, D), S) :- dryer(D), clothes(C), in(C, D, S), wet(C, S), not hasLint(D, S).
-poss(fold(C), S) :- clothes(C), clean(C, S), not (folded(C, S), holding(_, S), wet(C, S)). 
+poss(fold(C), S) :- clothes(C), clean(C, S), not folded(C, S), not holding(_, S), not wet(C, S). 
 poss(wear(C), S) :- clothes(C), folded(C, S).
-poss(move(C, F, T), S) :- clothes(C), container(T), container(F), in(C, F, S), not (T = F, holding(_, S), in(_, T, S)). 
+poss(move(C, F, T), S) :- not holding(_, S), container(T), not in(_, T, S), container(F), not T = F, clothes(C), in(C, F, S). 
 
 %%%%% SECTION: successor_state_axioms_laundry 
 %%%%% Write successor-state axioms that characterize how the truth value of all 
@@ -99,29 +100,26 @@ poss(move(C, F, T), S) :- clothes(C), container(T), container(F), in(C, F, S), n
 %%%%%
 %%%%% Write your successor state rules here: you have to write brief comments %
 
-%in requires two of (a) and (b) since there are two actions that can move an object into a container
+%in requires two of (a) and (b) since there are two actions that can move an object into a container, for (b) we combine the nots
 %for move action, we only need to check one of the locations each time since we either care where it was or where it went 
-in(O, C, [move(O, _, C)|S]).
-in(O, C, [putAway(O, C)|S]).
-in(O, C, [A|S]) :- not A = move(O, C, _), in(O, C, S).
-in(O, C, [A|S]) :- not A = fetch(O, C), in(O, C, S).
+in(O, C, [A|_S]):- A = move(O, _, C).
+in(O, C, [A|_S]):- A = putAway(O, C).
+in(O, C, [A|S]) :- not A = move(O, C, _), not A = fetch(O, C), in(O, C, S).
 %three cases to no longer be holding, depends on what you are holding, since certain things can be added to washers and certain things cannot
-holding(O, [fetch(O, _)|S]).
-holding(O, [A|S]) :- not A = putAway(O, _), holding(O, S).
-holding(O, [A|S]) :- soap(O), not A = addSoap(O, _), holding(O, S).
-holding(O, [A|S]) :- softener(O), not A = addSoftener(O, _), holding(O, S).
+holding(O, [A|_S]):- A = fetch(O, _).
+holding(O, [A|S]) :- not A = putAway(O, _), not A = addSoap(O, _), not A = addSoftener(O, _), holding(O, S).
 %these next six are classic cases, there is one action that causes them to be true and one action causes them to be false 
-hasSoap(W, [addSoap(P, W)|S]).
+hasSoap(W, [A|_S]):- A = addSoap(_, W).
 hasSoap(W, [A|S]) :- not A = washClothes(_, W), hasSoap(W, S).
-hasSoftener(W, [addSoftener(P, W)|S]).
+hasSoftener(W, [S|_S]):- A = addSoftener(_, W).
 hasSoftener(W, [A|S]) :- not A = washClothes(_, W), hasSoftener(W, S).
-hasLint(D, [dryClothes(_, D)|S]).
+hasLint(D, [A|_S]):- A = dryClothes(_, D).
 hasLint(D, [A|S]) :- not A = removeLint(D), hasLint(D, S).
-clean(C, [washClothes(C, _)|S]).
+clean(C, [A|_S]):- A = washClothes(C, _).
 clean(C, [A|S]) :- not A = wear(C), clean(C, S). 
-wet(C, [washClothes(C, _)|S]).
+wet(C, [A|_S]):- A = washClothes(C, _).
 wet(C, [A|S]) :- not A = dryClothes(C, _), wet(C, S).
-folded(C, [fold(C)|S]).
+folded(C, [A|_S]):- A = fold(C).
 folded(C, [A|S]) :- not A = wear(C), folded(C, S).
 
 %%%%% SECTION: declarative_heuristics_laundry
