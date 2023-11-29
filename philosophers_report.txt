@@ -24,13 +24,46 @@
 %%%%% INTERACTION IN REGULAR MODE
 %%%%% Include your interaction below when testing the planner in regular mode (ie. without declarative heuristics)
 
-
+% GOAL 1
+?- solve_problem(regular, 1, 8, Plan).
+Plan = [tryToEat(p1), pickUp(p1, f3), pickUp(p1, f1)]
+Yes (0.00s cpu, solution 1, maybe more)
+Plan = [tryToEat(p1), pickUp(p1, f3), pickUp(p2, f2), pickUp(p1, f1)]
+Yes (0.05s cpu, solution 13, maybe more)
 
 
 
 %%%%% INTERACTION IN HEURISTIC MODE
 %%%%% Include your interaction below when testing the planner in heuristic mode (ie. when using declarative heuristics for pruning)
 
+% GOAL 1
+?- solve_problem(heuristic, 1, 8, Plan).
+Plan = [tryToEat(p1), pickUp(p1, f3), pickUp(p1, f1)]
+Yes (0.00s cpu, solution 1, maybe more)
+Plan = [tryToEat(p1), pickUp(p1, f3), pickUp(p2, f2), pickUp(p1, f1)]
+Yes (0.06s cpu, solution 13, maybe more)
 
+% GOAL 2
+?- solve_problem(heuristic, 2, 8, Plan).
+Plan = [putDown(p1, f1), tryToEat(p1), pickUp(p1, f3), pickUp(p1, f1)]
+Yes (0.00s cpu, solution 1, maybe more)
+Plan = [putDown(p1, f1), tryToEat(p1), pickUp(p1, f3), pickUp(p2, f2), pickUp(p1, f1)]
+Yes (0.12s cpu, solution 25, maybe more)
+Plan = [putDown(p1, f3), tryToEat(p1), pickUp(p1, f3), pickUp(p2, f2), pickUp(p1, f1)]
+Yes (0.15s cpu, solution 32, maybe more)
+
+% GOAL 3
+?- solve_problem(heuristic, 3, 8, Plan).
+Plan = [putDown(p1, f1), tryToEat(p1), pickUp(p1, f3), pickUp(p2, f2), pickUp(p1, f1)]
+Yes (0.02s cpu, solution 1, maybe more)
+Plan = [putDown(p1, f3), tryToEat(p1), pickUp(p1, f3), pickUp(p2, f2), pickUp(p1, f1)]
+Yes (0.38s cpu, solution 106, maybe more)
+
+Plan = [putDown(p1, f1), tryToEat(p1), pickUp(p2, f2), pickUp(p1, f3), pickUp(p1, f1)]
+Yes (1.45s cpu, solution 421, maybe more)
+Plan = [putDown(p1, f3), tryToEat(p1), pickUp(p2, f2), pickUp(p1, f3), pickUp(p1, f1)]
+Yes (1.68s cpu, solution 491, maybe more)
+
+% GOAL 4
 
 

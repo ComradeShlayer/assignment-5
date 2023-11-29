@@ -137,13 +137,13 @@ folded(C, [A|S]) :- not A = wear(C), folded(C, S).
 %%%%%	
 %%%%% write your rules implementing the predicate  useless(Action,History) here. %
 
-useless(fetch(O, _), History) :- member(fetch(O, _), History).
-useless(putAway(O, _), History) :- member(putAway(O, _), History).
-useless(addSoap(P, W), History) :- member(addSoap(P, W), History).
-useless(addSoftener(T, W), History) :- member(addSoftener(T, W), History).
-useless(removeLint(D), History) :- member(removeLint(D), History).
-useless(washClothes(C, W), History) :- member(washClothes(C, W), History).
-useless(dryClothes(C, D), History) :- member(dryClothes(C, D), History).
-useless(fold(C), History) :- member(fold(C), History).
-useless(wear(C), History) :- member(wear(C), History).
-useless(move(O, F, T), History) :- member(move(O, F, T), History).
+useless(washClothes(C,W), History) :- member(dryClothes(C,W), History). % do not wash if the clothes are already dry
+useless(washClothes(C, _W), History) :- member(fold(C), History). % do not wash if the clothes are already folded
+useless(dryClothes(C, _W), History) :- member(fold(C), History). % do not dry if the clothes are already folded
+
+useless(putAway(O,C), [fetch(O,C) | _T]). % do not put away something you just fetched
+useless(fetch(O,C), [putAway(O,C) | _T]). % do not fetch something you just put away
+
+useless(move(_,_,_), [move(_,_,_) | _T]). % sequential move actions are redundant
+useless(fetch(_,_), [fetch(_,_) | _T]). % sequential fetch actions are redundant
+useless(putAway(_,_), [putAway(_,_) | _T]). % sequential putAway actions are redundant

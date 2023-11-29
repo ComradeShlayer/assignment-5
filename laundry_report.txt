@@ -11,73 +11,67 @@
 %%%%% SUMMARY
 %%%%% In 1-2 paragraphs, describe what part of the assignment you completed and discuss your overall findings.
 %%%%% Be sure to describe the computer you ran your tests on
-Max Shlayer
-I completed laundry.pl with the exception of the useless cases
-I am using an Asus Laptop 
-Intel(R) Core(TM) i7-7700HQ CPU @ 2.80GHz
-16GB RAM
+Tests were run on a 2018 Macbook Pro with 6-core i9 @ 2.9GHz, 32GB RAM
+
+We observed that the use of declarative heuristics was able to produce solutions in roughly 40% of the time as running in regular mode.
 
 
 
 %%%%% INTERACTION IN REGULAR MODE
 %%%%% Include your interaction below when testing the planner in regular mode (ie. without declarative heuristics)
-I ran problem 1, 20 times, I just included the first and last result 
 
-?- solve_problem(regular, 1, 6, P).
-P = [washClothes(cl1, w1), move(cl1, h1, w1), addSoap(p1, w1), fetch(p1, cbd1)]
-Yes (0.05s cpu, solution 1, maybe more)
-Elapsed time (sec): 0.0469999999999118
+% GOAL 1
+?- solve_problem(regular, 1, 6, Plan).
+Plan = [washClothes(cl1, w1), move(cl1, h1, w1), addSoftener(sft2, w1), fetch(sft2, cbd2), addSoap(p1, w1), fetch(p1, cbd1)]
+Yes (6.50s cpu, solution 1, maybe more)
+Plan = [washClothes(cl1, w1), addSoftener(sft2, w1), fetch(sft2, cbd2), move(cl1, h1, w1), addSoap(p1, w1), fetch(p1, cbd1)]
+Yes (6.60s cpu, solution 2, maybe more)
+Plan = [washClothes(cl1, w1), move(cl1, h1, w1), addSoap(p2, w1), fetch(p2, cbd2), addSoftener(sft1, w1), fetch(sft1, cbd1)]
+Yes (9.74s cpu, solution 3, maybe more)
+Plan = [washClothes(cl1, w1), addSoap(p2, w1), fetch(p2, cbd2), move(cl1, h1, w1), addSoftener(sft1, w1), fetch(sft1, cbd1)]
+Yes (9.85s cpu, solution 4, maybe more)
+Plan = [washClothes(cl1, w1), move(cl1, h1, w1), addSoftener(sft1, w1), fetch(sft1, cbd1), addSoap(p2, w1), fetch(p2, cbd2)]
+Yes (13.05s cpu, solution 5, maybe more)
 
-P = [washClothes(cl1, w1), fetch(p2, cbd2), move(cl1, h1, w1), addSoap(p1, w1), fetch(p1, cbd1)]
-Yes (0.95s cpu, solution 20, maybe more)
-Elapsed time (sec): 0.952999999999975
 
-I ran problem 2, 10 times, the results would clump in terms of time taken to complete so I included when there was a big jump in terms of time taken 
+% GOAL 2
+?- solve_problem(regular, 2, 8, Plan).
+Plan = [dryClothes(cl1, d1), move(cl1, w1, d1), washClothes(cl1, w1), move(cl1, h1, w1), addSoftener(sft2, w1), fetch(sft2, cbd2), addSoap(p1, w1), fetch(p1, cbd1)]
+Yes (1010.57s cpu, solution 1, maybe more)
+Plan = [dryClothes(cl1, d1), move(cl1, w1, d1), washClothes(cl1, w1), addSoftener(sft2, w1), fetch(sft2, cbd2), move(cl1, h1, w1), addSoap(p1, w1), fetch(p1, cbd1)]
+Yes (1021.24s cpu, solution 2, maybe more)
+Plan = [dryClothes(cl1, d1), move(cl1, w1, d1), washClothes(cl1, w1), move(cl1, h1, w1), addSoap(p2, w1), fetch(p2, cbd2), addSoftener(sft1, w1), fetch(sft1, cbd1)]
+Yes (1498.39s cpu, solution 3, maybe more)
 
-?- solve_problem(regular, 2, 8, P).
-P = [dryClothes(cl1, d1), move(cl1, w1, d1), washClothes(cl1, w1), move(cl1, h1, w1), addSoap(p1, w1), fetch(p1, cbd1)]
-Yes (7.03s cpu, solution 1, maybe more)
-Elapsed time (sec): 7.03100000000006
 
-P = [dryClothes(cl1, d1), move(cl1, w1, d1), washClothes(cl1, w1), move(cl1, h1, w1), addSoap(p2, w1), fetch(p2, cbd2)]
-Yes (13.86s cpu, solution 4, maybe more)
-Elapsed time (sec): 13.859
 
-P = [dryClothes(cl1, d1), move(cl1, w1, d1), washClothes(cl1, w1), addSoap(p1, w1), fetch(p1, cbd1), move(cl1, h1, w1)]
-Yes (24.38s cpu, solution 8, maybe more)
-Elapsed time (sec): 24.375
 
-P = [dryClothes(cl1, d1), move(cl1, w1, d1), washClothes(cl1, w1), addSoap(p2, w1), fetch(p2, cbd2), move(cl1, h1, w1)]
-Yes (25.08s cpu, solution 10, maybe more)
-Elapsed time (sec): 25.0780000000001
-
-I ran problem 3, but it didn't solve for a long time so I didn't get a result
 %%%%% INTERACTION IN HEURISTIC MODE
 %%%%% Include your interaction below when testing the planner in heuristic mode (ie. when using declarative heuristics for pruning)
-I ran problem 1, 20 times, I just included the first and last result 
-?- solve_problem(heuristic, 1, 6, P).
-P = [washClothes(cl1, w1), move(cl1, h1, w1), addSoap(p1, w1), fetch(p1, cbd1)]
-Yes (0.05s cpu, solution 1, maybe more)
-Elapsed time (sec): 0.0470000000000255
 
-P = [washClothes(cl1, w1), fetch(p2, cbd2), move(cl1, h1, w1), addSoap(p1, w1), fetch(p1, cbd1)]
-Yes (0.70s cpu, solution 20, maybe more)
-Elapsed time (sec): 0.703000000000202
+% GOAL 1
+?- solve_problem(heuristic, 1, 6, Plan).
+Plan = [washClothes(cl1, w1), move(cl1, h1, w1), addSoftener(sft2, w1), fetch(sft2, cbd2), addSoap(p1, w1), fetch(p1, cbd1)]
+Yes (2.50s cpu, solution 1, maybe more)
+Plan = [washClothes(cl1, w1), addSoftener(sft2, w1), fetch(sft2, cbd2), move(cl1, h1, w1), addSoap(p1, w1), fetch(p1, cbd1)]
+Yes (2.59s cpu, solution 2, maybe more)
+Plan = [washClothes(cl1, w1), move(cl1, h1, w1), addSoap(p2, w1), fetch(p2, cbd2), addSoftener(sft1, w1), fetch(sft1, cbd1)]
+Yes (3.89s cpu, solution 3, maybe more)
+Plan = [washClothes(cl1, w1), addSoap(p2, w1), fetch(p2, cbd2), move(cl1, h1, w1), addSoftener(sft1, w1), fetch(sft1, cbd1)]
+Yes (3.97s cpu, solution 4, maybe more)
+Plan = [washClothes(cl1, w1), move(cl1, h1, w1), addSoftener(sft1, w1), fetch(sft1, cbd1), addSoap(p2, w1), fetch(p2, cbd2)]
+Yes (5.21s cpu, solution 5, maybe more)
 
-I ran problem 2, 10 times, it takes about the same with or without the heuristic mode
-?- solve_problem(heuristic, 2, 8, P).
-P = [dryClothes(cl1, d1), move(cl1, w1, d1), washClothes(cl1, w1), move(cl1, h1, w1), addSoap(p1, w1), fetch(p1, cbd1)]
-Yes (7.48s cpu, solution 1, maybe more)
-Elapsed time (sec): 7.46899999999982
+% GOAL 2
+?- solve_problem(heuristic, 2, 8, Plan).
+Plan = [dryClothes(cl1, d1), move(cl1, w1, d1), washClothes(cl1, w1), move(cl1, h1, w1), addSoftener(sft2, w1), fetch(sft2, cbd2), addSoap(p1, w1), fetch(p1, cbd1)]
+Yes (193.31s cpu, solution 1, maybe more)
+Plan = [dryClothes(cl1, d1), move(cl1, w1, d1), washClothes(cl1, w1), addSoftener(sft2, w1), fetch(sft2, cbd2), move(cl1, h1, w1), addSoap(p1, w1), fetch(p1, cbd1)]
+Yes (196.40s cpu, solution 2, maybe more)
+Plan = [dryClothes(cl1, d1), move(cl1, w1, d1), washClothes(cl1, w1), move(cl1, h1, w1), addSoap(p2, w1), fetch(p2, cbd2), addSoftener(sft1, w1), fetch(sft1, cbd1)]
+Yes (260.32s cpu, solution 3, maybe more)
 
-P = [dryClothes(cl1, d1), move(cl1, w1, d1), washClothes(cl1, w1), move(cl1, h1, w1), addSoap(p2, w1), fetch(p2, cbd2)]
-Yes (14.56s cpu, solution 4, maybe more)
-Elapsed time (sec): 14.5629999999999
+% GOAL 3
 
-P = [dryClothes(cl1, d1), move(cl1, w1, d1), washClothes(cl1, w1), addSoap(p1, w1), fetch(p1, cbd1), move(cl1, h1, w1)]
-Yes (25.55s cpu, solution 7, maybe more)
-Elapsed time (sec): 25.5469999999998
 
-P = [dryClothes(cl1, d1), move(cl1, w1, d1), washClothes(cl1, w1), addSoap(p2, w1), fetch(p2, cbd2), move(cl1, h1, w1)]
-Yes (26.23s cpu, solution 10, maybe more)
-Elapsed time (sec): 26.2349999999999
+
