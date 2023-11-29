@@ -2,9 +2,9 @@
 % If you only have 2 group members, leave the last space blank
 %
 %%%%%
-%%%%% NAME: 
-%%%%% NAME:
-%%%%% NAME:
+%%%%% NAME: Sean Adlam  500787559
+%%%%% NAME: Max Shlayer 501017377
+%%%%% NAME: Razz Yau    501048542
 %
 % Add your report below
 % 

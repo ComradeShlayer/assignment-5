@@ -2,9 +2,9 @@
 % If you only have 2 group members, leave the last space blank
 %
 %%%%%
-%%%%% NAME: 
-%%%%% NAME:
-%%%%% NAME:
+%%%%% NAME: Sean Adlam  500787559
+%%%%% NAME: Max Shlayer 501017377
+%%%%% NAME: Razz Yau    501048542
 %
 % Add your report below
 % 
@@ -58,12 +58,17 @@ Plan = [putDown(p1, f1), tryToEat(p1), pickUp(p1, f3), pickUp(p2, f2), pickUp(p1
 Yes (0.02s cpu, solution 1, maybe more)
 Plan = [putDown(p1, f3), tryToEat(p1), pickUp(p1, f3), pickUp(p2, f2), pickUp(p1, f1)]
 Yes (0.38s cpu, solution 106, maybe more)
-
 Plan = [putDown(p1, f1), tryToEat(p1), pickUp(p2, f2), pickUp(p1, f3), pickUp(p1, f1)]
 Yes (1.45s cpu, solution 421, maybe more)
 Plan = [putDown(p1, f3), tryToEat(p1), pickUp(p2, f2), pickUp(p1, f3), pickUp(p1, f1)]
 Yes (1.68s cpu, solution 491, maybe more)
 
 % GOAL 4
+?- solve_problem(heuristic, 4, 8, Plan).
+Plan = [putDown(p2, f1), tryToEat(p2), pickUp(p2, f1), putDown(p1, f1), tryToEat(p1), pickUp(p1, f3), pickUp(p2, f2), pickUp(p1, f1)]
+Yes (1.67s cpu, solution 1, maybe more)
+Plan = [putDown(p2, f2), tryToEat(p2), pickUp(p2, f1), putDown(p1, f1), tryToEat(p1), pickUp(p1, f3), pickUp(p2, f2), pickUp(p1, f1)]
+Yes (2.45s cpu, solution 218, maybe more)
+
 
 
