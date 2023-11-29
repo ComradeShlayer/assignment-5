@@ -111,7 +111,7 @@ holding(O, [A|S]) :- not A = putAway(O, _), not A = addSoap(O, _), not A = addSo
 %these next six are classic cases, there is one action that causes them to be true and one action causes them to be false 
 hasSoap(W, [A|_S]):- A = addSoap(_, W).
 hasSoap(W, [A|S]) :- not A = washClothes(_, W), hasSoap(W, S).
-hasSoftener(W, [S|_S]):- A = addSoftener(_, W).
+hasSoftener(W, [A|_S]):- A = addSoftener(_, W).
 hasSoftener(W, [A|S]) :- not A = washClothes(_, W), hasSoftener(W, S).
 hasLint(D, [A|_S]):- A = dryClothes(_, D).
 hasLint(D, [A|S]) :- not A = removeLint(D), hasLint(D, S).
