@@ -61,8 +61,8 @@ goal_state(5, S) :- happy(p1, S), happy(p2, S), happy(p3,S).
 %2. there is a fork
 %3. the fork is available
 %4. the fork is between two philosophers
-poss(pickUp(P, F), S) :- philosopher(P), fork(F), available(F, S), left(P, L), between(P, F, L).
-poss(pickUp(P, F), S) :- philosopher(P), fork(F), available(F, S), right(P, R), between(P, F, R).
+poss(pickUp(P, F), S) :- philosopher(P), fork(F), available(F, S), left(P, L), between(P, F, L), not has(P, F, S).
+poss(pickUp(P, F), S) :- philosopher(P), fork(F), available(F, S), right(P, R), between(P, F, R), not has(P, F, S).
 
 %Can attempt to putDown if
 %1. there is a philosopher
@@ -122,7 +122,7 @@ waiting(P, [A | S]) :- not A = tryToEat(P), waiting(P, S).
 waiting(P, [A | S]) :- not A = putDown(P, F), waiting(P, S), has(P, F, S).
 
 
-%a philosopher is happy if they put down a fork after eating
+%a philosopher is happy if they put down a fork after eating or was happy at a point before
 %happy(P, S)
 happy(P, [A | S]) :- A = putDown(P, _F), eating(P, S).
 happy(P, [_A | S]) :- happy(P, S).
