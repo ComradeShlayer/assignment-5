@@ -13,9 +13,9 @@
 %%%%% Be sure to describe the computer you ran your tests on
 Tests were run on a 2018 Macbook Pro with 6-core i9 @ 2.9GHz, 32GB RAM
 
-We observed that the use of declarative heuristics was able to produce solutions in roughly 40% of the time as running in regular mode.
+We observed that the use of declarative heuristics was able to produce solutions for Goal #1 in roughly 40% of the time as running in regular mode. As the problems and their bounds got larger, the improvement in time improved exponentially. Goal #2 ran in just 20% of the time in heuristic mode compared to regular mode.
 
-
+We have been unable to get a solution for Goal #3 with declaritive heuristics after letting the program run for 20 minutes.
 
 %%%%% INTERACTION IN REGULAR MODE
 %%%%% Include your interaction below when testing the planner in regular mode (ie. without declarative heuristics)
